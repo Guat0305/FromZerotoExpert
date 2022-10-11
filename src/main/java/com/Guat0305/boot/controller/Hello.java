@@ -14,12 +14,17 @@ public class Hello {
     public String hello(HttpServletResponse response, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-            Cookie cookie = new Cookie("login" , "TRUE");
+            Cookie cookie = new Cookie("login" , "firstLogin");
             cookie.setMaxAge(86400);
             response.addCookie(cookie);
-            return "<h1>嗨，欢迎您来到 from zero to expert.<h1/>";
+            return "<h1>嗨，欢迎您来到 from zero to expert.</h1>";
         }else {
-            return "<h1>嗨，欢迎您再次到 from zero to expert.<h1/>";
+            for(Cookie cookie : cookies) {
+                if(cookie.getName().equals("login") && cookie.getValue().equals("firstLogin")) {
+                    return "<h1>嗨，欢迎您再次到 from zero to expert.</h1>";
+                }
+            }
+            return "<h1>WRONG</h1>";
         }
 
     }
